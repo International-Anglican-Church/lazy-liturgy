@@ -1,6 +1,7 @@
 from googleapiclient.discovery import build
 
 import google_docs
+import wordpress
 
 
 def main():
@@ -22,6 +23,15 @@ def main():
 
         docs_service.documents().batchUpdate(documentId=new_doc['documentId'], body={'requests': requests}).execute()
 
+    template_html = wordpress.get_page_html(wordpress.TEMPLATE_ID)
+    for tag in wordpress.get_all_tags(template_html):
+        tag_text_runs = google_docs.get_tag_text_runs(source_doc, tag)
+        template_html = wordpress.insert_tag_with_formatting(tag_text_runs, tag, template_html)
+
+    wordpress.set_page_html(wordpress.GENERATED_ID, template_html)
+
 
 if __name__ == '__main__':
+    print('TIME FOR SOUP')
     main()
+    print('ALL SLURPED UP')

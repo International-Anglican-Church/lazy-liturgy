@@ -35,7 +35,7 @@ def get_creds():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('google_creds.json', SCOPES)
             creds = flow.run_local_server(port=0, success_message='Thanks for signing in. You can close this tab now.')
 
         with open('token.pickle', 'wb') as token_file:
