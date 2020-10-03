@@ -82,8 +82,7 @@ def get_document_content(doc):
             for para_elem in doc_elem['paragraph']['elements']:
                 if 'textRun' in para_elem:
                     out += para_elem['textRun']['content']
-                elif 'inlineObjectElement' in para_elem:
-                    out += '📷'  # inline objects have an index, so they need to have a 1-character representation
+                out += '?' * (para_elem['endIndex'] - (len(out) + 1))
     return out
 
 
@@ -180,9 +179,15 @@ def get_tag_insertion_requests(tag, tag_text_runs, template_text):
         requests.append(get_bullet_creation_request(indices[0], indices[-1]))
 
     if tag == 'announcements':
-        indices = indices[1::2]  # remove half of the indices
-        indices.reverse()
-        for index in indices:
-            requests += get_bullet_deletion_requests(index)
+        bullet_start = indices[0]
+        newline_indices = []
+        for idx, char in enumerate(replace_text):
+            if char == '\n':
+                newline_indices.append(bullet_start + idx)
+
+        newline_indices = newline_indices[::2]
+        newline_indices.reverse()
+        for index in newline_indices:
+            requests += get_bullet_deletion_requests(index + 1)
 
     return requests
