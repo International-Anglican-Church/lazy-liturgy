@@ -7,7 +7,7 @@ from requests.auth import HTTPBasicAuth
 from google_docs import TAG_PATTERN
 
 TEMPLATE_ID = '11701'
-GENERATED_ID = '11874'
+GENERATED_ID = '11923'
 
 with open('wp_creds.json', 'r') as creds_file:
     cred_dict = json.load(creds_file)
