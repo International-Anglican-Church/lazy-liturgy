@@ -1,0 +1,25 @@
+Thanks for using Lazy Liturgy!
+
+Installing and Running
+----------------------
+1. Extract the .zip file somewhere on your computer
+2. Open a terminal (https://www.idownloadblog.com/2019/04/19/ways-open-terminal-mac/)
+3. Use the terminal to navigate to the directory where you extracted the .zip (https://smallbusiness.chron.com/previous-directory-mac-terminal-49989.html)
+4. Run this command: chmod 770 "Lazy Liturgy"
+5. You may now run Lazy Liturgy via the terminal (with the command ./Lazy\ Liturgy) or by double-clicking it in Finder
+
+Editing config.txt
+------------------
+The config.txt file contains information used by the Lazy Liturgy program.
+If you want to change any of this info, you can open the file, edit it, and save it before running Lazy Liturgy.
+
+How to find Document and Page IDs
+---------------------------------
+config.txt contains several IDs that reference Google Docs and Wordpress pages.
+If you want to update these, you can find the ID of a Google Doc or Wordpress page by looking at the URL in the top bar of your browser.
+
+If you open a Google Doc, the URL will be something like this: docs.google.com/document/d/1GClQeLe0R7T7HlK31Pf_Vr1BjTnvPVHrAP7WIVZvy0Q/edit
+The ID is the thing starting with 1 between /document/d/ and /edit. In this case it's 1GClQeLe0R7T7HlK31Pf_Vr1BjTnvPVHrAP7WIVZvy0Q
+
+If you open a Wordpress page, the URL will look something like this: www.springsiac.org/wp-admin/post.php?post=6586&action=edit
+The ID is the number between post= and &action=edit. In this case it's 6586
