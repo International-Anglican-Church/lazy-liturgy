@@ -11,4 +11,4 @@ source_folder_id=1xDNl4Tq-gE9luxkk8_96dZbCplNc963A
 
 [Wordpress]
 template_page_id=11701
-generated_page_id=12884
+generated_page_id=11923
