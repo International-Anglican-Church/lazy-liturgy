@@ -4,6 +4,5 @@ venv
 token.pickle
 google_creds.json
 wp_creds.json
-build 
+build
 dist
-creds.py

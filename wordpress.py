@@ -1,13 +1,12 @@
 import json
 import re
+from typing import Union
 
 import requests
 from requests.auth import HTTPBasicAuth
 
 from google_docs import TAG_PATTERN
 
-TEMPLATE_ID = '11701'
-GENERATED_ID = '11923'
 
 with open('wp_creds.json', 'r') as creds_file:
     cred_dict = json.load(creds_file)
@@ -28,7 +27,7 @@ def get_json(endpoint: str):
         return response.json()
 
 
-def get_page_html(page_id: int):
+def get_page_html(page_id: Union[int, str]):
     return get_json(f'pages/{page_id}')['content']['rendered']
 
 
@@ -58,13 +57,14 @@ def insert_tag_with_formatting(text_runs, tag: str, html: str) -> str:
         replace_html = f'<ul style="font-size: large">{replace_html}</ul>'
 
     if 'lyrics' in tag:
-        replace_html = replace_html.replace('<br><br>', '</i></span></p><p><span style="font-size: 18px;"><i>')
+        replace_html = f'<p style="font-size: 18px;"><b><i>{replace_html}</i></b></p>'
+        replace_html = replace_html.replace('<br><br>', '</i></b></p><p style="font-size: 18px;"><b><i>')
 
     html = html.replace('{{' + tag + '}}', replace_html)
     return html
 
 
-def set_page_html(page_id: int, html: str):
+def set_page_html(page_id: Union[int, str], html: str):
     response = requests.post(
         f'http://springsiac.org/wp-json/wp/v2/pages/{page_id}',
         data={'content': html},

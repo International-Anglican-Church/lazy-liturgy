@@ -1,0 +1,14 @@
+[Google Docs]
+source_id=1uRTZD6Cf1HmZdYzi9EJgw77k5NG9xwpOBg7o32oJJgc
+portrait_template_id=1fqr-FgNSG4obv5Sc61qtpjWFH0rvPN0JjZl0aHdshIA
+booklet_template_id=1DURgYOmH0jgGTASQ4nLnEVqaP0svK7IVqKw5QqCUzYU
+
+portrait_title=Zoom Liturgy for Print
+booklet_title=Park Bulletin
+
+dest_folder_id=1drOeHIfYupzoInW0U-j4zLPkz88dcNsE
+source_folder_id=1xDNl4Tq-gE9luxkk8_96dZbCplNc963A
+
+[Wordpress]
+template_page_id=11701
+generated_page_id=12884

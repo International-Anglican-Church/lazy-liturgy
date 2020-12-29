@@ -7,19 +7,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 SCOPES = ['https://www.googleapis.com/auth/documents', 'https://www.googleapis.com/auth/drive']
-DOCUMENT_IDS = {
-    'source': '1uRTZD6Cf1HmZdYzi9EJgw77k5NG9xwpOBg7o32oJJgc',
-    'portrait': '1fqr-FgNSG4obv5Sc61qtpjWFH0rvPN0JjZl0aHdshIA',
-    'booklet': '1DURgYOmH0jgGTASQ4nLnEVqaP0svK7IVqKw5QqCUzYU'
-}
-DOCUMENT_TITLES = {
-    'portrait': 'Zoom Liturgy for Print',
-    'booklet': 'Park Bulletin',
-}
-FOLDERS = {
-    'dest': '1drOeHIfYupzoInW0U-j4zLPkz88dcNsE',
-    'source': '1xDNl4Tq-gE9luxkk8_96dZbCplNc963A'
-}
 TAG_PATTERN = r'{{([^{}]+)}}'
 
 
@@ -44,9 +31,8 @@ def get_creds():
     return creds
 
 
-def get_document(doc_alias, docs_service):
-    doc_id = DOCUMENT_IDS[doc_alias]
-    return docs_service.documents().get(documentId=doc_id).execute()
+def get_document(document_id, docs_service):
+    return docs_service.documents().get(documentId=document_id).execute()
 
 
 def get_tag_text_runs(source_doc, tag):
@@ -103,11 +89,11 @@ def get_date(source_doc):
         raise RuntimeError('Unable to understand the date you entered')
 
 
-def copy_template(doc_alias, drive_service, docs_service):
-    source_doc = get_document('source', docs_service)
-    template_doc = get_document(doc_alias, docs_service)
+def copy_template(docs_config, doc_alias, drive_service, docs_service):
+    source_doc = get_document(docs_config['source_id'], docs_service)
+    template_doc = get_document(docs_config[doc_alias + '_template_id'], docs_service)
 
-    doc_title = f'{get_date(source_doc).strftime("%Y-%m-%d")} {DOCUMENT_TITLES[doc_alias]}'
+    doc_title = f'{get_date(source_doc).strftime("%Y-%m-%d")} {docs_config[doc_alias + "_title"]}'
 
     new_file = drive_service.files().copy(
         fileId=template_doc['documentId'],
@@ -116,8 +102,8 @@ def copy_template(doc_alias, drive_service, docs_service):
 
     new_file = drive_service.files().update(
         fileId=new_file['id'],
-        addParents=FOLDERS['dest'],
-        removeParents=FOLDERS['source'],
+        addParents=docs_config['dest_folder_id'],
+        removeParents=docs_config['source_folder_id'],
         fields='id, parents'
     ).execute()
 
